@@ -1,15 +1,15 @@
-import conf from "../conf.js";
+import conf from "../conf/conf.js";
 import { Client, Account, ID } from "appwrite";
 
 export class AuthService {
-  Client = new Client();
+  client = new Client();
   account;
 
   constructor() {
-    this.Client.setEndpoint(conf.appwriteUrl).setProject(
-      conf.appwriteProjectID
-    );
-    this.account = new Account(this.Client);
+    this.client
+      .setEndpoint(conf.appwriteUrl)
+      .setProject(conf.appwriteProjectID);
+    this.account = new Account(this.client);
   }
   async createAccount({ email, password, name }) {
     try {
@@ -49,7 +49,7 @@ export class AuthService {
 
   async logout() {
     try {
-        await this.account.deleteSession('current')
+      await this.account.deleteSession("current");
     } catch (error) {
       console.log("Appwrite service :: logout :: error", error);
     }
@@ -58,4 +58,4 @@ export class AuthService {
 
 const authService = new AuthService();
 
-export default AuthService;
+export default authService;
